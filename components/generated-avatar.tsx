@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { botttsNeutral, initials } from "@dicebear/collection";
 import type { Result } from "@dicebear/core";
 import { createAvatar } from "@dicebear/core";
+import { useMemo } from "react";
 
 interface GeneratedAvatarProps {
 	seed: string;
@@ -15,19 +16,17 @@ export const GeneratedAvatar = ({
 	className,
 	variant,
 }: GeneratedAvatarProps) => {
-	let avatar: Result;
+	const avatar: Result = useMemo(() => {
+		if (variant === "botttsNeutral") {
+			return createAvatar(botttsNeutral, { seed });
+		}
 
-	if (variant === "botttsNeutral") {
-		avatar = createAvatar(botttsNeutral, {
-			seed,
-		});
-	} else {
-		avatar = createAvatar(initials, {
+		return createAvatar(initials, {
 			seed,
 			fontWeight: 500,
 			fontSize: 42,
 		});
-	}
+	}, [seed, variant]);
 
 	return (
 		<Avatar className={cn(className)}>
