@@ -1,7 +1,7 @@
 import { SidebarProvider } from "@/components/ui/sidebar";
 import type { ChildrenProps } from "@/types";
-import { DashboardNavbar } from "./dashboard-navbar";
-import { DashboardSidebar } from "./dashboard-sidebar";
+import { DashboardNavbar } from "./ui/components/dashboard-navbar";
+import { DashboardSidebar } from "./ui/components/dashboard-sidebar";
 
 export default function DashboardLayout({ children }: ChildrenProps) {
 	return (

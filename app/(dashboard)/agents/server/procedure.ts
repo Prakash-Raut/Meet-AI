@@ -9,7 +9,7 @@ import {
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { and, count, desc, eq, getTableColumns, ilike, sql } from "drizzle-orm";
 import { z } from "zod";
-import { agentInsertSchema } from "../schema";
+import { agentInsertSchema } from "../lib/schema";
 
 export const agentsRouter = createTRPCRouter({
 	getOne: protectedProcedure

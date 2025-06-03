@@ -6,8 +6,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { agentInsertSchema } from "../../schema";
-import type { AgentGetOne } from "../../types";
+import { agentInsertSchema } from "../../lib/schema";
+import type { AgentGetOne } from "../../lib/types";
 
 import { GeneratedAvatar } from "@/components/generated-avatar";
 import { Button } from "@/components/ui/button";

@@ -22,7 +22,7 @@ export const DataTablePagination = ({
 				<Button
 					variant="outline"
 					size="sm"
-					disabled={page === 1}
+					disabled={page >= (totalPages || 1)}
 					onClick={() => onPageChange(Math.max(1, page - 1))}
 				>
 					Previous
@@ -30,7 +30,7 @@ export const DataTablePagination = ({
 				<Button
 					variant="outline"
 					size="sm"
-					disabled={page === totalPages}
+					disabled={page >= (totalPages || 1)}
 					onClick={() => onPageChange(Math.min(totalPages, page + 1))}
 				>
 					Next
