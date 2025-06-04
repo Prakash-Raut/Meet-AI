@@ -5,17 +5,13 @@ import type { Result } from "@dicebear/core";
 import { createAvatar } from "@dicebear/core";
 import { useMemo } from "react";
 
-interface GeneratedAvatarProps {
+interface Props {
 	seed: string;
 	className?: string;
 	variant?: "botttsNeutral" | "initials";
 }
 
-export const GeneratedAvatar = ({
-	seed,
-	className,
-	variant,
-}: GeneratedAvatarProps) => {
+export const GeneratedAvatar = ({ seed, className, variant }: Props) => {
 	const avatar: Result = useMemo(() => {
 		if (variant === "botttsNeutral") {
 			return createAvatar(botttsNeutral, { seed });
