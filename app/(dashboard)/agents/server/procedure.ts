@@ -133,8 +133,6 @@ export const agentsRouter = createTRPCRouter({
 				.values({
 					...input,
 					userId: ctx.auth.user.id,
-					createdAt: new Date(),
-					updatedAt: new Date(),
 				})
 				.returning();
 
