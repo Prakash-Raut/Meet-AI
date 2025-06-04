@@ -66,8 +66,12 @@ export const agents = pgTable("agents", {
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
 	instructions: text("instructions").notNull(),
-	createdAt: timestamp("created_at").notNull(),
-	updatedAt: timestamp("updated_at").notNull(),
+	createdAt: timestamp("created_at")
+		.$defaultFn(() => new Date())
+		.notNull(),
+	updatedAt: timestamp("updated_at")
+		.$defaultFn(() => new Date())
+		.notNull(),
 });
 
 export const meetingStatus = pgEnum("meeting_status", [
@@ -95,6 +99,10 @@ export const meetings = pgTable("meetings", {
 	transcriptUrl: text("transcript_url"),
 	recordingUrl: text("recording_url"),
 	summary: text("summary"),
-	createdAt: timestamp("created_at").notNull(),
-	updatedAt: timestamp("updated_at").notNull(),
+	createdAt: timestamp("created_at")
+		.$defaultFn(() => new Date())
+		.notNull(),
+	updatedAt: timestamp("updated_at")
+		.$defaultFn(() => new Date())
+		.notNull(),
 });
