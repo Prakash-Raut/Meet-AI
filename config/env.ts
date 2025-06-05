@@ -11,4 +11,5 @@ export const Config = {
 	NEXT_PUBLIC_STREAM_VIDEO_API_KEY:
 		process.env.NEXT_PUBLIC_STREAM_VIDEO_API_KEY || "",
 	STREAM_VIDEO_API_SECRET: process.env.STREAM_VIDEO_API_SECRET || "",
+	OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
 };
