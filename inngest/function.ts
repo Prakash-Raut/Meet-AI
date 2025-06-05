@@ -20,12 +20,27 @@ export const meetingsProcessing = inngest.createFunction(
 	{ event: "meetings/processing" },
 	async ({ event, step }) => {
 		const response = await step.run("fetch-transcript", async () => {
-			return fetch(event.data.transcriptUrl).then((res) => res.text());
+			const res = await fetch(event.data.transcriptUrl);
+			if (!res.ok) {
+				throw new Error(
+					`Failed to fetch transcript: ${res.status} ${res.statusText}`,
+				);
+			}
+			return res.text();
 		});
 
 		const transcript = await step.run("parse-transcript", async () => {
-			const jsonl = JSONL.parse<StreamTranscriptItem>(response);
-			return jsonl;
+			try {
+				const jsonl = JSONL.parse<StreamTranscriptItem>(response);
+				if (!Array.isArray(jsonl) || jsonl.length === 0) {
+					throw new Error("Parsed transcript is empty or invalid");
+				}
+				return jsonl;
+			} catch (error) {
+				throw new Error(
+					`Failed to parse transcript: ${error instanceof Error ? error.message : "Unknown error"}`,
+				);
+			}
 		});
 
 		const transcriptWithSpeakers = await step.run("add-speakers", async () => {
@@ -57,6 +72,7 @@ export const meetingsProcessing = inngest.createFunction(
 						user: {
 							name: "Unknown",
 						},
+						speaker: "Unknown",
 					};
 				}
 
@@ -67,15 +83,27 @@ export const meetingsProcessing = inngest.createFunction(
 			});
 		});
 
-		const { output } = await summarizer.run(
-			`Summarizr the following transcript: ${JSON.stringify(transcriptWithSpeakers)}`,
-		);
+		const summary = await step.run("generate-summary", async () => {
+			const { output } = await summarizer.run(
+				`Summarize the following transcript: ${JSON.stringify(transcriptWithSpeakers)}`,
+			);
+			return output;
+		});
 
 		await step.run("save-summary", async () => {
+			if (!summary || summary.length === 0) {
+				throw new Error("No summary generated");
+			}
+
+			const firstMessage = summary[0] as TextMessage;
+			if (!firstMessage?.content || typeof firstMessage.content !== "string") {
+				throw new Error("Invalid summary format");
+			}
+
 			await db
 				.update(meetings)
 				.set({
-					summary: (output[0] as TextMessage).content as string,
+					summary: firstMessage.content,
 					status: "completed",
 				})
 				.where(eq(meetings.id, event.data.meetingId));
