@@ -1,4 +1,3 @@
-import "server-only";
 import "dotenv/config";
 
 export const Config = {
