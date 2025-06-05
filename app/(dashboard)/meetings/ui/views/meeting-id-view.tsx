@@ -14,6 +14,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ActiveState } from "../components/active-state";
 import { CancelledState } from "../components/cancelled-state";
+import { CompletedState } from "../components/completed-state";
 import { MeetingIdViewHeader } from "../components/meeting-id-view-header";
 import { ProcessingState } from "../components/processing-state";
 import { UpcomingState } from "../components/upcoming-state";
@@ -81,7 +82,7 @@ export function MeetingIdView({ meetingId }: Props) {
 					onRemove={handleRemoveMeeting}
 				/>
 				{isCancelled && <CancelledState />}
-				{isCompleted && <div>Completed</div>}
+				{isCompleted && <CompletedState data={data} />}
 				{isProcessing && <ProcessingState />}
 				{isUpcoming && (
 					<UpcomingState
