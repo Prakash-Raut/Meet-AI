@@ -7,10 +7,10 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { MeetingsListHeader } from "../ui/components/meetings-list-header";
 import {
-	MeetingsView,
-	MeetingsViewError,
-	MeetingsViewLoader,
-} from "../ui/views/meetings-view";
+	MeetingIdView,
+	MeetingIdViewError,
+	MeetingIdViewLoader,
+} from "../ui/views/meeting-id-view";
 
 interface Props {
 	params: Promise<{ meetingId: string }>;
@@ -39,9 +39,9 @@ const MeetingPage = async ({ params }: Props) => {
 		<>
 			<MeetingsListHeader />
 			<HydrationBoundary state={dehydrate(queryClient)}>
-				<Suspense fallback={<MeetingsViewLoader />}>
-					<ErrorBoundary fallback={<MeetingsViewError />}>
-						<MeetingsView />
+				<Suspense fallback={<MeetingIdViewLoader />}>
+					<ErrorBoundary fallback={<MeetingIdViewError />}>
+						<MeetingIdView meetingId={meetingId} />
 					</ErrorBoundary>
 				</Suspense>
 			</HydrationBoundary>

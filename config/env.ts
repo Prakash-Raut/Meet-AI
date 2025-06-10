@@ -11,4 +11,7 @@ export const Config = {
 		process.env.NEXT_PUBLIC_STREAM_VIDEO_API_KEY || "",
 	STREAM_VIDEO_API_SECRET: process.env.STREAM_VIDEO_API_SECRET || "",
 	OPENAI_API_KEY: process.env.OPENAI_API_KEY || "",
+	NEXT_PUBLIC_STREAM_CHAT_API_KEY:
+		process.env.NEXT_PUBLIC_STREAM_CHAT_API_KEY || "",
+	STREAM_CHAT_API_SECRET: process.env.STREAM_CHAT_API_SECRET || "",
 };

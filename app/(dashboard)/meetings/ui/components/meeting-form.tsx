@@ -139,7 +139,7 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: Props) => {
 									<CommandSelect
 										options={(agents.data?.items ?? []).map((agent) => ({
 											id: agent.id,
-											value: agent.name,
+											value: agent.id,
 											children: (
 												<div className="flex items-center gap-x-2">
 													<GeneratedAvatar
