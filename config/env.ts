@@ -14,4 +14,6 @@ export const Config = {
 	NEXT_PUBLIC_STREAM_CHAT_API_KEY:
 		process.env.NEXT_PUBLIC_STREAM_CHAT_API_KEY || "",
 	STREAM_CHAT_API_SECRET: process.env.STREAM_CHAT_API_SECRET || "",
+	POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN || "",
+	POLAR_SUCCESS_URL: process.env.POLAR_SUCCESS_URL || "",
 };
