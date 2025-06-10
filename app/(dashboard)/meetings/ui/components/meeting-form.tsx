@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -32,8 +33,8 @@ interface Props {
 
 export const MeetingForm = ({ onSuccess, onCancel, initialValues }: Props) => {
 	const trpc = useTRPC();
+	const router = useRouter();
 	const queryClient = useQueryClient();
-
 	const [openNewAgentDialog, setOpenNewAgentDialog] = useState(false);
 	const [agentSearch, setAgentSearch] = useState("");
 
@@ -50,11 +51,17 @@ export const MeetingForm = ({ onSuccess, onCancel, initialValues }: Props) => {
 				await queryClient.invalidateQueries(
 					trpc.meetings.getMany.queryOptions({}),
 				);
+				await queryClient.invalidateQueries(
+					trpc.premium.getFreeUsage.queryOptions(),
+				);
 
 				onSuccess?.(data.id);
 			},
 			onError: (error) => {
 				toast.error(error.message);
+				if (error.data?.code === "FORBIDDEN") {
+					router.push("/upgrade");
+				}
 			},
 		}),
 	);

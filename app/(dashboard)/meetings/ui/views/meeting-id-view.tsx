@@ -41,6 +41,9 @@ export function MeetingIdView({ meetingId }: Props) {
 				await queryClient.invalidateQueries(
 					trpc.meetings.getMany.queryOptions({}),
 				);
+				await queryClient.invalidateQueries(
+					trpc.premium.getFreeUsage.queryOptions(),
+				);
 				router.push("/meetings");
 			},
 			onError: (error) => {
